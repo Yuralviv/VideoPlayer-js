@@ -40,11 +40,13 @@ class VideoPlayer {
     }
 
     //  time skip
-    skip(){
-        this.video.currentTime += parseFloat(e.target.dataset.skip);
+    skip(e){
+        this.video.currentTime += parseFloat( e.target.dataset.skip);
     }
 
 
 }
+
+//create object video
 const video = new VideoPlayer();
 video.init();
