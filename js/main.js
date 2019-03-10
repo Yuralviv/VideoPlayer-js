@@ -4,9 +4,8 @@ class VideoPlayer {
         this.player = document.querySelector('.player');
         this.video = this.player.querySelector('.viewer');
         this.progress = document.querySelector('.progress');
-        this.progressBar = this.progress.querySelector('.progress__filed');
+        this.progressBar = this.progress.querySelector('.progress__filled');
         this.toggle = this.player.querySelector('.toggle');
-        this.skipButtons = this.player.querySelectorAll('[data-skip]');
         this.ranges = this.player.querySelectorAll('.player__slider');
     }
 
@@ -17,34 +16,33 @@ class VideoPlayer {
     }
 
     //  all events
-    events() {
-        this.video.addEventListener('click', (e) => this.togglePlay() );
-        this.toggle.addEventListener('click', (e) => this.togglePlay() );
+    events(self) {
+        this.video.addEventListener('click', (e) => this.togglePlay(e) );
+        this.toggle.addEventListener('click', (e) => this.togglePlay(e) );
         this.ranges.forEach(range =>  range.addEventListener('change', e => this.handleRangeUpdate(e) ));
         this.ranges.forEach(range =>  range.addEventListener('mousemove', e => this.handleRangeUpdate(e) ));
-        this.skipButtons.forEach(btn => btn.addEventListener('click', e => this.skip(e) ));
+        this.video.addEventListener('timeupdate', e => this.handleProgress(e) );
     }
 
     //  play/pause
-    togglePlay() {
+    togglePlay(e) {
         const method = this.video.paused ? 'play' : 'pause';
         this.toggle.textContent = this.video.paused ? "▌▌" : '►';
         this.video[method]();
     }
 
-    //volume and speed
+    //  volume and speed
     handleRangeUpdate(e){
         this.video['volume'] = e.target.value;
         this.video['playbackRate'] = e.target.value;
 
     }
 
-    //  time skip
-    skip(e){
-        this.video.currentTime += parseFloat( e.target.dataset.skip);
+    //  video progress
+    handleProgress(e){
+        const percent = (this.video.currentTime / this.video.duration) * 100;
+        this.progressBar.style.flexBasis = `${percent}% `;
     }
-
-
 }
 
 //create object video

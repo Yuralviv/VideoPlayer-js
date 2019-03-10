@@ -64,13 +64,13 @@ body{
     height: 5px;
     transition: heigth .3s;
     background: rgba(0,0,0, 0.5);
-    cursor: ew-resize;
+    cursor: pointer;
 }
 .progress__filled{
     width: 50%;
     background: #ff0000;
     flex: 0;
-    flex-basis: 50%;
+    flex-basis: 0%;
 }
 input[type=range]{
     -webkit-appearance: none;
